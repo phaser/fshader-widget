@@ -1,5 +1,7 @@
 import { CodeJar } from "codejar";
 import { withLineNumbers } from "codejar-linenumbers";
+import Prism from "prismjs";
+import "prismjs/components/prism-clike";
 
 const styles = `
   @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap');
@@ -131,9 +133,7 @@ class ShaderWidget extends HTMLElement {
 
     // Set up syntax highlighting
     const highlight = (el) => {
-      if (typeof Prism !== 'undefined') {
-        el.innerHTML = Prism.highlight(el.textContent, Prism.languages.clike || Prism.languages.javascript, 'clike');
-      }
+      el.innerHTML = Prism.highlight(el.textContent, Prism.languages.clike, 'clike');
     };
 
     // Initialize CodeJar

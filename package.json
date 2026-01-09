@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "codejar": "^4.3.0",
-    "codejar-linenumbers": "^1.0.1"
+    "codejar-linenumbers": "^1.0.1",
+    "prismjs": "^1.30.0"
   }
 }
