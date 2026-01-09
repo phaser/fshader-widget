@@ -12,4 +12,12 @@ module.exports = {
       type: 'module',
     },
   },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+    ],
+  },
 };
