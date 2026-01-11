@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap');
+
+:host {
+  display: block;
+}
+
+.editor-container {
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+  font-family: "Source Code Pro", monospace;
+  font-size: 14px;
+  font-weight: 400;
+  min-height: 240px;
+  letter-spacing: normal;
+  line-height: 20px;
+  padding: 10px;
+  tab-size: 4;
+  display: flex;
+  align-items: flex-start;
+}
+
+.shader-canvas {
+  margin-left: 5px;
+}
+
+.codejar-wrap {
+  display: flex;
+  align-items: flex-start;
+}
+
+.codejar-linenumbers {
+  font-family: "Source Code Pro", monospace;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: right;
+  color: #999;
+  padding-right: 10px;
+  user-select: none;
+}
+
+.codejar-linenumbers-inner-wrap {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  overflow: hidden;
+}
+
+.codejar-linenumbers {
+  mix-blend-mode: initial;
+  height: 100%;
+}
+
+.codejar-linenumber {
+  position: relative;
+  top: 0px;
+}
+
+.editor-canvas {
+  font-family: "Source Code Pro", monospace;
+  font-size: 14px;
+  line-height: 20px;
+  min-height: 320px;
+  outline: none;
+}
+
+/* Prism.js theme (minimal) */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata { color: #708090; }
+.token.punctuation { color: #999; }
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol { color: #905; }
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin { color: #690; }
+.token.operator,
+.token.entity,
+.token.url,
+.token.variable { color: #9a6e3a; }
+.token.atrule,
+.token.attr-value,
+.token.keyword { color: #07a; }
+.token.function { color: #DD4A68; }
+.token.regex,
+.token.important { color: #e90; }
