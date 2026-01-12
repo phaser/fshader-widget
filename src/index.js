@@ -6,7 +6,7 @@ import styles from "./styles.css";
 
 class ShaderWidget extends HTMLElement {
   static get observedAttributes() {
-    return ['width', 'height'];
+    return ['canvas-width', 'canvas-height'];
   }
 
   constructor() {
@@ -16,8 +16,8 @@ class ShaderWidget extends HTMLElement {
   }
 
   connectedCallback() {
-    const width = parseInt(this.getAttribute('width')) || 320;
-    const height = parseInt(this.getAttribute('height')) || 320;
+    const width = parseInt(this.getAttribute('canvas-width')) || 320;
+    const height = parseInt(this.getAttribute('canvas-height')) || 320;
     
     // Get initial code from element content
     const initialCode = this.textContent.trim();
@@ -31,14 +31,12 @@ class ShaderWidget extends HTMLElement {
       <style>${styles}</style>
       <div class="editor-container">
         <div><div class="editor-canvas" data-manual data-gramm="false"></div></div>
-        <div class="shader-canvas"><canvas id="${canvasId}"></canvas></div>
+        <div class="shader-canvas"><canvas id="${canvasId}" width="${width}" height="${height}"></canvas></div>
       </div>
     `;
 
     const editor = this.shadowRoot.querySelector(`.editor-canvas`);
     const canvas = this.shadowRoot.querySelector("#" + canvasId);
-
-    this._fitToContainer(canvas);
 
     // Set up syntax highlighting
     const highlight = (el) => {
