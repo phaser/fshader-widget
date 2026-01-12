@@ -23,17 +23,22 @@ class ShaderWidget extends HTMLElement {
     const initialCode = this.textContent.trim();
     this.textContent = ''; // Clear original content
 
+    const randId = `${Math.random().toString(36).substring(2, 15)}`;
+    const canvasId = `canvas-${randId}`;
+
     // Build shadow DOM
     this.shadowRoot.innerHTML = `
       <style>${styles}</style>
       <div class="editor-container">
         <div><div class="editor-canvas" data-manual data-gramm="false"></div></div>
-        <div><canvas class="shader-canvas" width="${width}" height="${height}"></canvas></div>
+        <div class="shader-canvas"><canvas id="${canvasId}"></canvas></div>
       </div>
     `;
 
-    const editor = this.shadowRoot.querySelector('.editor-canvas');
-    const canvas = this.shadowRoot.querySelector('.shader-canvas');
+    const editor = this.shadowRoot.querySelector(`.editor-canvas`);
+    const canvas = this.shadowRoot.querySelector("#" + canvasId);
+
+    this._fitToContainer(canvas);
 
     // Set up syntax highlighting
     const highlight = (el) => {
@@ -205,6 +210,16 @@ class ShaderWidget extends HTMLElement {
   setCode(code) {
     this._jar?.updateCode(code);
   }
+
+  _fitToContainer(canvas){
+    // Make it visually fill the positioned parent
+    canvas.style.width ='100%';
+    canvas.style.height='100%';
+    // ...then set the internal size to match
+    canvas.width  = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+
 }
 
 customElements.define('shader-widget', ShaderWidget);
