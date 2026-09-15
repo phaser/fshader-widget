@@ -115,6 +115,11 @@ class ShaderWidget extends HTMLElement {
     `;
 
     const shaderProgram = this._initShaderProgram(gl, vsSource, fsSource);
+    if (this._program)
+    {
+        gl.deleteProgram(this._program);
+    }
+    this._program = shaderProgram;
 
     const programInfo = {
       program: shaderProgram,
@@ -136,7 +141,9 @@ class ShaderWidget extends HTMLElement {
       -1.0,  1.0
     ]);
 
-    const positionBuffer = gl.createBuffer();
+    this._positionBuffer ??= gl.createBuffer();
+    const positionBuffer = this._positionBuffer;
+
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
 
@@ -172,15 +179,27 @@ class ShaderWidget extends HTMLElement {
 
   _initShaderProgram(gl, vsSource, fsSource) {
     const vertexShader = this._loadShader(gl, gl.VERTEX_SHADER, vsSource);
-    const fragmentShader = this._loadShader(gl, gl.FRAGMENT_SHADER, fsSource);
+    let fragmentShader;
+    try {
+        fragmentShader = this._loadShader(gl, gl.FRAGMENT_SHADER, fsSource);
+    } catch (err)
+    {
+        gl.deleteShader(vertexShader);
+        throw err;
+    }
 
     const shaderProgram = gl.createProgram();
     gl.attachShader(shaderProgram, vertexShader);
     gl.attachShader(shaderProgram, fragmentShader);
     gl.linkProgram(shaderProgram);
 
+    gl.deleteShader(vertexShader);
+    gl.deleteShader(fragmentShader);
+
     if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
-      throw new Error(`Unable to initialize shader program: ${gl.getProgramInfoLog(shaderProgram)}`);
+      const log = gl.getProgramInfoLog(shaderProgram);
+      gl.deleteProgram(shaderProgram);
+      throw new Error(`Unable to initialize shader program: ${log}`);
     }
 
     return shaderProgram;
